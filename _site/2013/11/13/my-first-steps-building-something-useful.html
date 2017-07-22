@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>My first steps building something useful</title>
+  <meta name="description" content="So far in this not very frequently updated personal/technical – the “hobby” – section of my blog, I’ve shown some first steps with the Raspberry Pi and an ex...">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4444/2013/11/13/my-first-steps-building-something-useful.html">
+  <link rel="alternate" type="application/rss+xml" title="Opinions &amp; Experiments" href="/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">Opinions &amp; Experiments</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+            <a class="page-link" href="/about/">Author</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">My first steps building something useful</h1>
+    <p class="post-meta">
+      <time datetime="2013-11-13T22:24:46+01:00" itemprop="datePublished">
+        
+        Nov 13, 2013
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>So far in this not very frequently updated personal/technical – the “hobby” – section of my blog, I’ve shown some <a href="https://iot.ghost.io/raspberry-pi-do-try-this-at-home/">first steps with the Raspberry Pi</a> and an example how we use cheap microelectronic devices to <a href="https://iot.ghost.io/diy-remote-temperature-sensor/">monitor the temperature</a> of our lab equipment. I’ve grown quite fond of <a href="http://shop.ciseco.co.uk">Ciseco</a>, an English Internet-of-things company run by enthusiasts, who build easy-to-use wireless devices that enable the communication between physically separated pieces of electronics. The temperature monitor in our freezers are one example, they use a radio band to send their reading to a Raspberry Pi, which then updates a website in regular intervals.</p>
+
+<p>I’m trying to use a similar system at home for domestic purposes. Unfortunately, the setup of a Raspberry Pi in the kitchen (the place where I most often wonder what I’m just missing on the web, Twitter, eMail or, for that matter, the temperature) would be frowned upon. In my beyond-the-Raspberry Pi-phase, I had also explored the <a href="http://arduino.cc">Arduino</a> and <a href="http://mbed.org">mbed</a> platforms, and with them the various ways how microcontrollers can control displays different from the widely known video standards. Now put a cheap <a href="http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus">SPI</a>-controlled 128×64 pixel display (a ST7565 positive LCD with RGB backlight, e.g. from <a href="http://www.phenoptix.com/products/graphic-st7565-positive-lcd-128x64-with-rgb-backlight-extras-st7565-by-adafruit-250">Phenoptix</a>) for about £17 and a radio-controlled Arduino clone (the Ciseco <a href="http://shop.ciseco.co.uk/xinorf-100-arduino-uno-r3-based-dev-board-with-radio-transciever/">XinoRF</a>) together, and you realise that a wireless serial display for the Raspberry Pi is possible.</p>
+
+<p>Now I don’t spend £30 on a XinoRF lightly (and to many <a href="http://shop.ciseco.co.uk/raswik/">RasWik</a> users it is THE MOST IMPORTANT item of their kit). However, the <a href="http://shop.ciseco.co.uk/rf-328-arduino-atmega-328-compatible-radio-transceiver-rfu-328/">RFµ-328</a> is a cost-efficient Arduino-compatible alternative that comes at about half the price. And here is where my troubles began. While I could easily wire my XinoRF to a level shifter and then to the display using a breadboard (see the <a href="http://www.ladyada.net/learn/lcd/st7565.html">ST7565 tutorial</a> on the Adafruit Learning System), the first iteration of my RFu-based device featured some exciting soldering:</p>
+
+<p><img src="/content/images/2015/09/first_iteration-300x300.jpg" alt="" /></p>
+
+<p>So what you see here is the two incoming wires of a 5V power supply, a <a href="http://shop.ciseco.co.uk/powerpod-1117-3v3/">3V PowerPOD</a>Â to control the incoming voltage, a RFu hidden behind the display and A LOT OF WIRES. Part of the problem is that the RFµ, the LCD, and the LCD backlight all require their own 3V/GND supply, and in this first iteration I had created power rails from solder blobs… …<strong>don’t try this at home</strong>.</p>
+
+<p>I’m no expert and my Google search “how to get away from breadboards and still be fire safe” guided me to stripboard. This was great in theory as it allowed me to replace the solder blobs with a more fundamental surface. However, the RFµ is designed towards <a href="http://en.wikipedia.org/wiki/Surface-mount_component">surface mounting</a>, and my SPI pins broke loose more often than not in this attempt:</p>
+
+<p><img src="/content/images/2015/09/second_iteration-300x224.jpg" alt="" /></p>
+
+<p>Just when I was about to give up on the idea of my wireless Raspberry Pi output, simply because I didn’t deem it safe to run when I’m not around, Ciseco launched the <a href="http://shop.ciseco.co.uk/rfu-developer-board/">RFu Developer Board</a>Â for a mere Â£4. This is the product I’d name a first born after them, if I had any left.</p>
+
+<p>The Developer Board is just a circuit board with nothing on it. It’s bare. But it’s nicely designed in that it allows various power options (e.g. a battery, incoming DC cables, or power via a <a href="http://en.wikipedia.org/wiki/FTDI">FTDI</a> adapter). The battery and DC inputs run via a pad that has solder connections for a PowerPOD, and with that, applying up to 16V supports the RFu, 8 +/GND pairs (bottom of the board) , and a +/GND on an SPI-link (left on the board) with the appropriate 3V. The SPI pins of the RFu are broken out to this separate series of holes on the left of the board, and underneath and next to the RFu you have nice solder pads for more prototyping.</p>
+
+<p><img src="/content/images/2015/09/Ciseco_shopping-300x300.jpg" alt="" /></p>
+
+<p>The entire build of my now final wireless display is shown in the next series of pictures. First, this is what you need on top of your SPI display and the external power supply: The dev board, the PowerPOD, and the RFu – just above £20 all together.</p>
+
+<p>In the first step, I soldered on the PowerPOD to the dev board. There are four connections (Vin, GND, Vout, /) on the POD and at equivalent positions on the board. As my power supply had relatively solid cables, I used them to anchor the POD on the board, and I bridged the Vout between the POD and the board with some solid core wire. Following this step, I also soldered on the RFµ headers to the 2mm holes.</p>
+
+<p><img src="/content/images/2015/09/power_on-300x224.jpg" alt="" /></p>
+
+<p>In Ciseco tradition there is very little documentation of the board available, but here I took the opportunity to check how the SPI pins are broken out to the left of the board. The relevant mapping for me was:</p>
+
+<p>RFu pin 6 – MISO/SID (Arduino D12), pin 7 – MOSI/A0 (D11), pin 8 – SCK (D13), pin 9 - SS (D10), pin 11 – SCL (which I used for RST, A5).</p>
+
+<p>At this stage, I also primed the RFµ for remote programming on the <a href="http://shop.ciseco.co.uk/explorer-plus-5-in-1-usb-interface-for-xbee-xrf-rfu-etc-exp/">Explorer Plus</a>. I’m going to write about the software underpinnings and the configuration of the wireless display at some other time. Today is just about the hardware.</p>
+
+<p><img src="/content/images/2015/09/dress_rehearsal-300x224.jpg" alt="" /></p>
+
+<p>With the RFu fitted.</p>
+
+<p>In the final step, I then simply added a 220 Ohm resistor between the 3V support on the bottom to the breadboard, because the backlight prefers a wee bit of resistance and I’m going to take the voltage from the breadboard piece of the board. The Vdd and GND of the LCD I supplied from the SPI-bit on the left of the board, along with all the SPI data connections required.</p>
+
+<p>The ultimate “product” from back, top and front is shown below. Now, I’m not afraid anymore to put this into a nice box and on the kitchen wall.</p>
+
+<p><img src="/content/images/2015/09/front-300x224.jpg" alt="" /></p>
+
+<p>Note added about two year later: I’d be afraid again to put something like this into a nice box. Do a PCB. It isn’t that hard. :-)</p>
+
+
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+          <li>
+            <a href="https://twitter.com/BorisAdryan"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">BorisAdryan</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Structured and unstructure thoughts. Often IoT-related. Sometimes education-related. By Boris Adryan.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

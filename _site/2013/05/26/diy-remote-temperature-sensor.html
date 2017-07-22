@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>DIY remote temperature sensor</title>
+  <meta name="description" content="(If you’re not interested in the history and just want the technical bits, scroll down to Implementation.)">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4444/2013/05/26/diy-remote-temperature-sensor.html">
+  <link rel="alternate" type="application/rss+xml" title="Opinions &amp; Experiments" href="/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">Opinions &amp; Experiments</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+            <a class="page-link" href="/about/">Author</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">DIY remote temperature sensor</h1>
+    <p class="post-meta">
+      <time datetime="2013-05-26T10:07:29+02:00" itemprop="datePublished">
+        
+        May 26, 2013
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>(If you’re not interested in the history and just want the technical bits, scroll down to Implementation.)</p>
+
+<p>Over the past few months I have been playing with a <a href="http://www.raspberrypi.org">Raspberry Pi</a> (RPi), an extremely cheap credit card-sized Linux computer (see <a href="http://iot.ghost.io/raspberry-pi-do-try-this-at-home/" title="Raspberry Pi - do try this at home">Do try this at home</a> for a report of my first explorations). One of my first experiments was about temperature and light level detection with an analog/digital converter connected to the RPi. My better half immediately spotted the weakness of the system: Often you’re interested in the temperature in places where you wouldn’t necessarily want to put a computer. Thanks to Google I soon discovered that radio is frequently used for communication between electronics devices and that there are a range of industry standards, for example <a href="http://en.wikipedia.org/wiki/Zigbee">ZigBee</a>. Amongst those ZigBee devices, the <a href="http://en.wikipedia.org/wiki/Xbee">Xbee</a> has apparently become something like what Scotch Tape is for adhesive tape. Now there was a problem: I had (still have!) a smattering of electronics skills, I could just about query the <a href="http://en.wikipedia.org/wiki/GPIO">GPIO</a> of the RPi, and my wife suggested me using devices that cost about £20 a pop and have a pin out not compatible to anything I had ever seen in my life. Not good.</p>
+
+<p>Fast forward a handful boring seminars and Google, along with various permutations of “wireless”, “Raspberry Pi”, “cheap Xbee”, “remote sensor RPi” etc, and I had discovered the <a href="http://shop.ciseco.co.uk/xrf-wireless-rf-radio-uart-rs232-serial-data-module-xbee-shape-arduino-pic-etc/">XRF</a> from <a href="http://shop.ciseco.co.uk">Ciseco</a>. Each XRF radio module comes for about £10, which I found affordable enough for a potentially failing experiment, they offer a <a href="http://shop.ciseco.co.uk/slice-of-pi-add-on-for-raspberry-pi/">shield for the Raspberry Pi</a> to mount the radio (£4), and a <a href="http://bit.ly/12UIJtf">little search</a> convinced me that some people must have succeeded with this before. Now what to do?</p>
+
+<p>Thankfully, virologist <a href="http://hcvpi.bham.ac.uk">Peter Balfe</a> at the University of Birmingham had discovered the RPi and the XRF modules about a year before me, and a put a website up that describes how he is using them for <a href="http://hcvpi.bham.ac.uk/Freezer.html">freezer monitoring</a> where the temperature is sent to the RPi and rendered into a graph on the web. In other words: He’s sticking them into a -80 degree environment, and they still seem to work. If you think a little bit about that, you probably realise the potential of remote monitoring and the great many applications in your own lab, for very little money. For the freezer application, Peter had been using a thermistor (a temperature-dependent resistor), and if you know electronics, you realise that his sensor is worth less than a mere pound. Again, Ciseco have a useful range of products, and for £7 you get a platform to put any analog sensor into a <a href="http://shop.ciseco.co.uk/analog-to-digital-xrf-development-sensor-12bit-adc/">little battery-powered box</a> and have it talk to your RPi. In theory a RPi base station can cater for several dozen sensors, as long as their is no cold room in the “line of sight” between the sensor and the receiver. Just looking at the price range of many analog sensors, one can be looking at a total sensor price based on: thermistors for low-temperature, e.g. -80C: Â£30; calibrated thermometers -30C to 125C: ~£21; light sensor: ~£19; water detector: ~£22; movement sensor: ~£19, or even air-pressure or detection of various gases for just a few pounds more.</p>
+
+<p>A few weeks ago that was all Greek to me. Peter has put a very helpful <a href="http://hcvpi.bham.ac.uk/Publications/PDFs/Freezer.pdf">PDF with his building instructions online</a>, but in the meantime a few things had changed and I ran into a few unexpected problems, and so I’m putting my guide for fellow researchers here.</p>
+
+<p><strong>Implementation</strong></p>
+
+<p>Requirements: Basic soldering skills and a rough idea what the individual components are doing for assembling the hardware, reasonable Unix and scripting skills to programme the XRF and present the data on the RPi.</p>
+
+<p>Shopping list for a freezer monitor: Assuming that you already have a RPi, you can get most of the rest from Ciseco (<a href="http://shop.ciseco.co.uk/temperature-xrf-development-sensor-thermistor/">thermistor kit</a>, <a href="http://shop.ciseco.co.uk/xrf-wireless-rf-radio-uart-rs232-serial-data-module-xbee-shape-arduino-pic-etc/">XRF</a> for the RPi, <a href="http://shop.ciseco.co.uk/slice-of-pi-add-on-for-raspberry-pi/">Slice of Pi</a> to mount it). Various other bits include a <a href="http://www.maplin.co.uk/aa-size-battery-holders-31427">2 AA battery box</a>, a <a href="http://www.maplin.co.uk/pp3-type-battery-snap-44392">battery snap</a>, a pair of Energizer Ultimate Lithium AAs (they have a rather steep price but don’t freeze at -80 degrees), and I personally recommend a <a href="http://www.tesco.com/groceries/Product/Details/?id=268439451">Glenfiddich Taster Pack</a> for various reasons. So without the RPi and the booze, you’re looking at about £40 including your first set of batteries.</p>
+
+<p>A slight warning: Ciseco is a small company run by enthusiasts, and they themselves say that they’re engineers, not writers. If you run into any problems, it’s probably best to discuss it in their <a href="http://openmicros.org/index.php/component/kunena/10-ciseco-support?Itemid=0">Support Forum</a> rather than spending endless hours searching for the non-existent documentation.</p>
+
+<p><img src="/content/images/2015/09/thermistor-1.jpg" alt="" /></p>
+
+<p><strong>Step 1:</strong> Build your Slice of Pi. So starting with the green board and the black headers, you build according to this <a href="http://openmicros.org/index.php/articles/94-ciseco-product-documentation/raspberry-pi/227-slice-of-pi">picture</a>.5-10min.</p>
+
+<p><strong>Step 2:</strong> Build your Thermistor box following a <a href="http://www.openmicros.org/index.php/articles/88-ciseco-product-documentation/211-ccb-coin-cell-board-pictorial-build-guide">pictorial guide</a>. Note that instead of the LDR, you would solder on the thermistor, and in my case, the surface mount 10k resistor was a standard 10k with wires. You don’t need the coin battery, but instead you solder the battery snap to the terminal near the capacitor (red goes to 3V3, black goes to GND). Don’t slot your batteries in as yet, first programme the XRF to be in analog mode with a reasonable sleep cycle (more about that later). 10-20min.</p>
+
+<p><strong>Step 3:</strong> Congratulate yourself to finishing off the soldering part of the project and have a bottle of your Glenfiddich Taster Pack. Keep the round package of the bottle. You will use it as a case for your freezer sensor.</p>
+
+<p><strong>Step 4:</strong> Mount a XRF on the Slice of Pi and stick it onto the RPi. Before that, you should already disable the default output from Debian to your serial port by editing cmdline.txt in /boot and remove any reference to ttyAMA0, and also comment out T0:23:respawn:/sbin/getty -L ttyAMA0 115200 vt100 in /etc/inittab as indicated e.g. <a href="http://www.irrational.net/2012/04/19/using-the-raspberry-pis-serial-port/">here</a>, at <a href="http://openmicros.org/index.php/articles/94-ciseco-product-documentation/raspberry-pi/283-setting-up-my-raspberry-pi">Ciseco</a> or in Peter’s document. I’ve had some technical problems and realised that the widely used webiopi demon interferes with the serial port, so you have to disable that as well in case you’ve installed it.</p>
+
+<p>Step 5. Give your XRF a personality. By default all the XRFs act as pass-through devices, i.e. they can receive and send information over the serial port and use <a href="http://en.wikipedia.org/wiki/AT_command">AT commands</a>. The XRF that’s going into your freezer needs to get “analog personality”, which means that the XRF will periodically read the voltage from the thermistor and send that value to the XRF on the RPi.</p>
+
+<p>This requires a firmware update and, if things go wrong, you can end up in a <a href="http://openmicros.org/index.php/component/kunena/10-ciseco-support/4683-xrf-on-slice-of-pi-not-responding?Itemid=0">world of pain</a>. However, they give you a rather good description of the <a href="http://openmicros.org/index.php/articles/84-xrf-basics/215-xrf-firmware-upload-with-a-raspberry-pi">firmware process using the RPi</a>. Everything you need is on GitHub, the <a href="https://github.com/CisecoPlc/XRF-Uploader">xrf_uploader</a> and the most recent of the llapAnalog*.bin from the <a href="https://github.com/CisecoPlc/XRF-Firmware-downloads/tree/master/XRF-LLAP">firmware folder</a>. Care should be taken about the line feed issue. I recommend to do a test run without the XRF mounted on the Slice of Pi. If the xrf_uploader says something along the lines of “0 lines read”, you’re likely having issues and that would send your XRF into trouble (see above ‘world of pain’). If you’re seeing “xx lines read” (xx being » 0), the xrf_upload will of course fail without an XRF, but you should be save for the real thing. 1-2hrs.</p>
+
+<p><strong>Step 6:</strong> Learn LLAP; name your XRF and send it to sleep. <a href="http://openmicros.org/index.php/articles/85-llap-lightweight-local-automation-protocol/101-llap-starter">LLAP</a> (and <a href="http://openmicros.org/index.php/articles/85-llap-lightweight-local-automation-protocol/112-llap">here</a>) is a light-weight protocol for the communication between your XRF devices. For example, once everything is up and running, the XRF in the freezer will regularly send something like “aX1ANA1234–”, which means the sensor with the name X1 has a reading of 1234 on his analog-digital converter. You can read this message with your XRF on the RPi using either a normal terminal program or a custom-written script, which then takes care of the rest like creating nice graphs. Depending on the personality of your XRF, there are <a href="http://openmicros.org/index.php/articles/87-llap-lightweight-local-automation-protocol/llap-devices-commands-and-instructions">additional LLAP commands</a> the XRF will understand. (Note that this is where it’s useful to have a look at the <a href="http://openmicros.org/index.php/articles/87-llap-lightweight-local-automation-protocol/llap-devices-commands-and-instructions/190-llap-device-xrf-pinout">pin layout and firmware functions</a> of the XRF – in more complex scenarios the XRF is well capable of reading different analog and digital sensors, and outputting voltage on specific pins for hardware to react at the remote site).</p>
+
+<p>In contrast to Peter who chose to do everything programmatically, I installed minicom as terminal program and configured my XRF by copying LLAP commands into the console. Note that LLAP expects the full command to arrive at the XRF within a few milliseconds, so typing them doesn’t cut the mustard. Type your commands in a separate editor and then copy them across. See here for <a href="http://openmicros.org/index.php/articles/94-ciseco-product-documentation/raspberry-pi/283-setting-up-my-raspberry-pi">installation and configuration of minicom</a>. Add automatic line breaks, echo and wrapping for better readability.</p>
+
+<p>I issued: a–CHDEVIDX1 (renames the XRF from it’s default name — to X1), aa–REBOOT– (to reboot and save the name), aX1WAKE–, aX1INTVL030M, aX1CYCLE– (these commands configure the XRF to wake up every 30 min to take a measurement, send it, and go back to sleep again). Once that’s finished, you can stick your XRF onto the thermistor board, put in the batteries, and mount them into the whiskey box.</p>
+
+<p>Note that it can be tricky to reconfigure your XRF once it’s in sleep mode. The device sends it’s battery status every 10th cycle (so approximately every 5 hours) and you have about 100 ms to tell it it’s new cycling interval. I recommend the code in Peter Balfe’s writeup for a strategy how to deal with it.</p>
+
+<p><strong>Step 7:</strong> Mount your other XRF on the Slice of Pi.</p>
+
+<p><strong>Step 8:</strong> Listen. If you leave minicom open, you will see messages with the substring ANA come in about every 30 min. For room-temperature measurements and with the thermistor firmware (which exists), we would receive the actual temperature, but in our case, calibration is needed. Get the values at 4, -20 and -80 degrees to see what the effect of the cold is on your thermistor reading. I used this for a polynomial fit to approximate the temperature.</p>
+
+<p><strong>Step 9:</strong> Write some code to do stuff with your readings. This is where your creativity comes in. Again, Peter has a few interesting features in his solution. I only found that the messages from my remote XRF didn’t come in convenient 12 byte packages when I listen to the serial port using inWaiting() from the serial module in Python, but sometimes would break LLAP messages into random fragments. That’s clearly an issue with how the function is triggered. I introduced a</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>len = ser.inWaiting()  
+  if len == 12 or len == 24 or len == 36 :  
+  msg = ser.read(ser.inWaiting())
+</code></pre>
+</div>
+<p>and that seems to capture the messages appropriately.</p>
+
+<p>I may put some example code up once I’m happy with my functionality.</p>
+
+<p> </p>
+
+<p>Final note: -80 degrees is bloody cold, and although Nasa has a requirement for batteries not to freeze at that temperature, the stuff you get in normal consumer markets isn’t totally up for that. The Energizer Ultimate Lithium batteries dropped from 3.6V to 2.8V within minutes of putting them into the freezer. The continuously froze and lost another 0.03V every further 5 hrs. In the meantime Peter sent me a chart with his battery readings, and they seem to stabilise around 2.15V and stay there for a few months of monitoring.</p>
+
+
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+          <li>
+            <a href="https://twitter.com/BorisAdryan"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">BorisAdryan</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Structured and unstructure thoughts. Often IoT-related. Sometimes education-related. By Boris Adryan.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

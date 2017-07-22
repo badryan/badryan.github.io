@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Turning a Nook Simple Touch into a wireless screen</title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4444/2014/03/18/turning-a-nook-simple-touch-into-a-wireless-screen.html">
+  <link rel="alternate" type="application/rss+xml" title="Opinions &amp; Experiments" href="/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">Opinions &amp; Experiments</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+            <a class="page-link" href="/about/">Author</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Turning a Nook Simple Touch into a wireless screen</h1>
+    <p class="post-meta">
+      <time datetime="2014-03-18T14:21:30+01:00" itemprop="datePublished">
+        
+        Mar 18, 2014
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="/content/images/2015/09/nook-300x226.jpg" alt="" /></p>
+
+<p>At the recent <a href="https://iot.ghost.io/open-iot-hackathon/">Open IoT Hackathon</a> my closest competitor Ajith Shadakshari presented a hardware hack that utilised a <a href="http://en.wikipedia.org/wiki/Nook_Simple_Touch">Nook Simple Touch</a> e-reader device as a low-energy wireless screen to dynamically display room occupancy, as informed by a data stream. I’m usually not one for hardware hacks as it is quite simple to brick your device and lose your investment, however, the low cost of the Nook (£50 at the time of writing) convinced me to have a go at it.</p>
+
+<p>Hacking Nook devices seems to be a common sport and people with jailbreak/product hacking experience will find plenty of <a href="http://lmgtfy.com/?q=hacking+nook+simple+touch">tutorials on the internet</a>. This was my first exploration in this direction, and I didn’t want to “just hack it” but turn it into a useful home product: A wireless display for sensor data and Twitter updates that can go several days without recharging.</p>
+
+<p><strong>Breaking it</strong></p>
+
+<p>Ingredients for the hack:</p>
+
+<ul>
+  <li>Nook Touch Simple, box fresh, with firmware v1.2.1</li>
+  <li>microSD card, with SD adapter for my iMac</li>
+  <li>a Google account for installing Android software from Google Play</li>
+  <li>some basic Unix skills</li>
+</ul>
+
+<p>I’m not going to copy&amp;paste commands into here, but will highlight relevant bits from other tutorials which I followed. My main guide was <a href="http://http://www.alexroddie.com/2013/06/Nook-Simple-Touch-rooted-minimalist-writing-tablet.html">Turning a Nook Simple Touch into a minimalist writing tablet</a> by Alex Roddie. He pointed me to two forum entries at a mobile developer website,</p>
+
+<ul>
+  <li><a href="http://forum.xda-developers.com/showthread.php?t=2040351">Rooting the Nook with NookManager – aÂ graphical rooter</a></li>
+  <li><a href="http://forum.xda-developers.com/showthread.php?t=2086582">Installing NTGAppsAttack – Google Apps installer add-on for NookManager</a></li>
+</ul>
+
+<p>I followed the first forum entry slavishly from 1. to 8. Everything else seems to concern trouble shooting and some technical background, but the gist really is in the first forum post. I was using a 4GB microSD card and I “burned” the image of the NookManager v0.5 using the <em>dd</em> command on my Mac (note: if you don’t know what an image or <em>dd</em> is, you probably don’t want to mess with your device). So this essentially puts a core Android installation to your feet. You are effectively running Unix now as root.</p>
+
+<p>The second set of forum posts deals with installing NTGAppsAttack. Again, I followed all steps 1. to 23. from the first post slavishly (I didn’t have to 3.), and yes, where it says “23. … <em>Keep reading</em>“, you should. Installing SearchMarket was my final step. I remember the update process on the Nook showed something about downloading the app, which seemed to take forever, but in fact it took a reboot to find that the app had long been installed and the Nook was ready for action.</p>
+
+<p><strong>Installing it</strong></p>
+
+<p>The screen you can see above shows a HTML/CSS encoded website served from my <a href="https://iot.ghost.io/airpi-speaks-nodered/">Raspberry Pi running NodeRED</a>. Details on the software side of things to follow, in brief it’s using the <em>template</em> node to take data from my AirPi to make the website.</p>
+
+<p>As Ajith had pointed out in his project description, he was using the <a href="https://play.google.com/store/apps/details?id=com.dolphin.browser">Dolphin Browser Mini</a> that allows to run a web browser in windowless mode. The interval refresh of the page displaying all info is part of the NodeRED flow, as detailed in <a href="http://l0l.org.uk/2014/01/simple-node-red-web-page/">Layer Zero Lab’s excellent blog post</a>.</p>
+
+<p><strong>Further tweaks</strong></p>
+
+<p>…the awkward moment when you want to show off your Nook wireless screen, and it shows you the Barnes and Noble screen saver. Although already looking like a proper IoT device, in its core your Nook still thinks it’s an e-book reader. Not pressing any button or the screen results in screen saver activity and various sleep modes. Plus, it also think it’s a phone and wastes and awful lot of energy running phone apps. Both behaviours are not great if you want to leave your display for remote updates, without user interference.</p>
+
+<p>The e-book software doesn’t support “no screen saver” and setting it to the slowest response just delays the inevitable. I’ve come to use the <a href="https://play.google.com/store/apps/details?id=schaze.waketimer">WakeTimer</a> which keeps both the screen and the wifi connection alive. There are alternative suggestions including the manipulation of an internal SQLite database which contains the seconds to sleep, but starting up WakeTimer after every reboot isn’t too bad for now.</p>
+
+<p>The energy wasted by the completely unnecessary phone services amounted to ~75% of the battery. In Alex Roddie’s blog post, he identifies those issues and recommends removal of <em>Phone.apk</em> and <em>TelephonyProvider.apk</em> in <em>/system/app/</em> as possible solutions. However, he talks about the ES File Explorer in this context, and in my hands that application only gave me grief because for some reason <em>/system</em> was mounted on a read-only partition, which opposite to some claims was not changeable on my Nook. Ultimately, I resorted to some manly command-line tinkering as root using a terminal program (can’t remember which one). I followed the example shown on <a href="http://stackoverflow.com/questions/5467881/a-terminal-command-for-a-rooted-android-to-remount-system-as-read-write">StackOverflow</a>Â to remount /system as read/write partition (note that the exact mount points may be called differently on your device). Thereafter, I entered <em>/system/app</em> with a chainsaw and deleted most of the applications listed in this forum entry: <a href="http://forum.xda-developers.com/showthread.php?t=1933615">Nook Simple Touch (N2E) power management / battery optimization</a></p>
+
+<p><strong>At this stage, on a completely recharged battery, my Nook Simple Touch runs about two-three days as wireless display without any further intervention (other than starting up WakeTimer and Dolphin).</strong></p>
+
+
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+          <li>
+            <a href="https://twitter.com/BorisAdryan"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">BorisAdryan</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Structured and unstructure thoughts. Often IoT-related. Sometimes education-related. By Boris Adryan.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

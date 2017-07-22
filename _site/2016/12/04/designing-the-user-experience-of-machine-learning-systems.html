@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Designing the User Experience of Machine Learning Systems</title>
+  <meta name="description" content="A few months ago I submitted an abstract to a UX conference. I’m not sure if my proposal is going to be accepted, but I thought it would be worth sharing my ...">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4444/2016/12/04/designing-the-user-experience-of-machine-learning-systems.html">
+  <link rel="alternate" type="application/rss+xml" title="Opinions &amp; Experiments" href="/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">Opinions &amp; Experiments</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+            <a class="page-link" href="/about/">Author</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Designing the User Experience of Machine Learning Systems</h1>
+    <p class="post-meta">
+      <time datetime="2016-12-04T18:31:06+01:00" itemprop="datePublished">
+        
+        Dec 4, 2016
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>A few months ago I submitted an abstract to a UX conference. I’m not sure if my proposal is going to be accepted, but I thought it would be worth sharing my thoughts on the user experience of Machine Learning Systems on my currently quite neglected blog.</p>
+
+<p>Those who follow <a href="https://twitter.com/BorisAdryan">@BorisAdryan</a> on Twitter may have heard about my <a href="http://www.thingmonk.com">Thingmonk</a> talk about that very subject:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OUlgsle6UpM" frameborder="0" allowfullscreen=""></iframe>
+
+<p>While the <a href="http://www.slideshare.net/BorisAdryan/thingmonk-2015">slides for my talk</a> are pretty self-explanatory, the following abstract delivers my motivation a bit more systematically.
+<br />
+###Designing the User Experience of Machine Learning Systems
+Computers don’t have a notion of the world around them. Nevertheless, the current generation of personal devices already attempts to hide that fact by providing context-specific information and recommendations that are based on some interpretation of previous input (e.g. search terms) and behaviour (e.g. commute patterns). At this stage, most users don’t expect websites, mobile phones or tablets to give useful predictive insight. True-positive predictions (<em>‘I see you’re arriving at the cinema - would you like to see a list of movies?’</em>) are often met with positive surprise, false-positive predictions (<em>‘Customers who bought this book about contraception als wanted to know about diapers’</em>) provoke laughter. ==We usually expect to be disappointed and recommender systems to be broken - it’s the reality of machine learning UX.==</p>
+
+<p>With the anticipated billions of devices that make up the Internet of Things, it becomes clear that information overload is imminent. We cannot longer digest the vast amount of raw data coming off these devices; i.e. from a practical as well as a UX perspective we have to get away from looking at raw output on dashboards (the proverbial ‘app for each device’) to intelligent systems that can deal with this data in real-time and provide users with agglomerated context-specific information and relevant, actionable insight. Add speech: Rather than having a nagging voice remind us every minute of an impending energy crisis, we only want to interrupt a journey if it is clear that it cannot be completed without refuelling the car, and that there is a reasonably opportunity to do so nearby. A well-trained machine learning method could be used to infer such ‘knowledge’ from a set of arbitrary data, based on statistical considerations and properties of previously learned data.</p>
+
+<p>A machine learning method may build a classifier that categorises combinations of incoming data (e.g. amount of gas, distance to target, distance to next gas station, etc) as belonging to groups (<em>‘this is a good opportunity for refuelling’</em> or <em>‘this is not a good moment to annoy the driver’</em>). Conceptually we can use the classifier at any time (even when it is not ‘trained’), but the initial state of any machine learning system is that of ignorance, i.e. it is unclear whether or not a a prediction is true and the decision may be random. While ‘on-the-fly’ learning exists, ==ultimately all machine learning is iterative and requires regular feedback== to clarify to the computer whether a given set of data really belongs to one or another group: ==this is the training phase that makes the classifier useful, and more training and more feedback means better classifiers==.</p>
+
+<p>In academic machine learning method development, as well as in applications of machine learning in the industrial R&amp;D context, training is a widely accepted, necessary evil. ==Things become tricky when machine learning and the uninitiated consumer come together==. When a user without knowledge of the underlying process is confronted with repeated confirmation requests (<em>‘Do you agree this is a good moment to stop?’</em>), ==the training phase can become a UX nightmare== that in the worst case makes the user avoid the system altogether, before it ever can become any good. We are already seeing websites and apps that use iterative training. Some take the confirmation strategy, but don’t communicate why they’re doing it. Others present even objectively bad predictions but allow the user to mark and discard these. Is voice control in respect to providing feedback to machine learning systems more or less intrusive? It seems that systematic A/B testing is required, as some communities (e.g. home automation geeks vs. professional truck drivers) may be more appealed by one or the other strategy.</p>
+
+<p>While providing a metric of the reliability of a prediction is a must for engineers, ==confronting consumers with p-values, false discovery rates or area-under-the-curve is a clear no go==. What is the best strategy to go about it? People of a certain age will remember how any weather forecast longer than a day into the future was just a random guess, and accepted the very fact. Nowadays, some weather websites feature a reliability score. But if an arbitrary ‘34% reliability’ provide more ‘actionable insight’ than the sheer acceptance that predictions are random is unclear.</p>
+
+<p>==Can we avoid all this trouble by creating vast training facilities for machine learning algorithms in connected products? Likely not.== Good machine learning requires lots of training data. Power comes with large numbers. However, most predictions for the Internet of Things are going to be based on the integration of data across different devices. As everyone might have a different combination of devices that should be taken into consideration, and everyone might have a different scope for using the Internet of Things (the <em>‘What does our user want?’</em> – think security, fitness, efficiency), providers of machine learning solutions cannot train their methods without the users themselves. We may want to think about large-scale simulations that draw bootstrapped ensembles of virtual devices and try to infer ‘this particular virtual user’s need’, but ultimately this will only lower the number of classes we’re trying to predict — if our features and classification itself are correct, that’s still subject to some sort of (human?) supervision.</p>
+
+<p><strong>My personal conclusion:</strong> Coming from the perspective of a machine learning method developer and having experienced bad UX around self-learning devices myself, I cannot provide solutions to the discourse but act as an interpreter between the fields.</p>
+
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+          <li>
+            <a href="https://twitter.com/BorisAdryan"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">BorisAdryan</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Structured and unstructure thoughts. Often IoT-related. Sometimes education-related. By Boris Adryan.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

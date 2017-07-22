@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Is it all machine learning?</title>
+  <meta name="description" content="Recently I engaged with James Baker, another Software Sustainability Institute Fellow and historian, in some friendly Twitter banter over the use of the phra...">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4444/2015/10/20/is-it-all-machine-learning.html">
+  <link rel="alternate" type="application/rss+xml" title="Opinions &amp; Experiments" href="/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">Opinions &amp; Experiments</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+            <a class="page-link" href="/about/">Author</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Is it all machine learning?</h1>
+    <p class="post-meta">
+      <time datetime="2015-10-20T11:18:58+02:00" itemprop="datePublished">
+        
+        Oct 20, 2015
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Recently I engaged with <a href="https://twitter.com/j_w_baker">James Baker</a>, another <a href="http://software.ac.uk/fellows/james-baker">Software Sustainability Institute Fellow</a> and historian, in some friendly Twitter banter over the use of the phrase ‘machine learning’. As an individual with a background in the humanities as well as a thorough grounding in many technical aspects of modern life, James tripped over an issue that many non-technical folk are likely to struggle with: <strong>The boundary between some basic programmatic decision making and machine learning.</strong></p>
+<center>
+<blockquote class="twitter-tweet" data-partner="tweetdeck"><p lang="en" dir="ltr">Machine learning fail: phone thinks I am in Caracas. I am not.</p>&mdash; James Baker (@j_w_baker) <a href="https://twitter.com/j_w_baker/status/655359514259116032">October 17, 2015</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-partner="tweetdeck"><p lang="en" dir="ltr"><a href="https://twitter.com/BorisAdryan">@BorisAdryan</a> I guess it is one of those phrases the usage of which will gradually detach from its meaning (much like &#39;deconstruction&#39;).</p>&mdash; James Baker (@j_w_baker) <a href="https://twitter.com/j_w_baker/status/655367230448869376">October 17, 2015</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
+<p>In a time when more and more tasks are assisted by software and computing is becoming increasingly ubiquitous (yep, I mean both your phone and the connected light bulb aka “Internet of Things”), I believe we need to differentiate between the following algorithmic entities:
+<br /></p>
+<center>**rule-based decision making &lt;=&gt; mathematical decision making &lt;=&gt; machine learning &lt;=&gt; artificial intelligence**</center>
+
+<p><img src="/content/images/2015/10/decision_making.jpg" alt="" /></p>
+
+<p><br />
+First of all, we need to get away from <strong>big data</strong> as a term. What counts as ‘big’ changes from one year to the other, and the relevant question really is ‘<em>how much is <strong>enough data</strong> to solve my problem?</em>’. While for some rule-based decision making a single bit is sufficient information, statistical approaches intrinsically benefit from <a href="https://en.wikipedia.org/wiki/Law_of_large_numbers">larger amounts</a> of data. Of course this has an influence on where you can execute your decision making logic. Quite a few statistical/machine learning methods require the presence of many data points in memory, and those are less likely to be used in your mobile phone any time soon than they’re probably behind the decision making process in a cloud-based application. Think recommender systems on Netflix or Amazon.</p>
+
+<p>Another frequently encountered term is <strong>data science</strong>. That leads me to the people who are most likely having the qualification to cleanly execute a decision making task in software. Everyone who calls themselves a serious programmer knows how to deal with numerical data. It doesn’t require much mathematical genius to implement a few methods for the <a href="https://en.wikipedia.org/wiki/Interpolation">inter- and extrapolation</a> of numerical data, provided there’s a simple ‘input =&gt; output’ function that describes the observations. Remember that even MS Excel has functions to <a href="https://en.wikipedia.org/wiki/Polynomial">fit polynomials</a> up to 6th or 7th order. Once you have established what output should follow which input, it is already possible to perform outlier detection or predictive maintenance – without diving much deeper into machine learning.</p>
+
+<p>It’s hard to define what precisely constitutes data science and how it differs from <strong>basic mathematical reasoning</strong>. The boundaries are fuzzy. Curve fitting methods are secondary school material, while more advanced machine learning methods require a solid foundation in <a href="https://en.wikipedia.org/wiki/Probability">probabilistic thinking</a> and the ability to integrate often vastly heterogenous data sources (both conceptually and by means of a programming language). If the decision making is based on simple data tuples and this data is sufficient for reliable decision making, for the sake of the argument, machine vibration vs failure rate, we can easily predict how much longer our turbine is going to run until it’s definitely going to fail. That’s not machine learning. However, life is often more complicated and machine failure might be a multi-factor problem. If we are presented with a large table containing all sorts of information, relevant or irrelevant (which we don’t know!), such as machine age, batch number, colour, maximum vibration, turbine diameter and blade angle, we can use <a href="https://en.wikipedia.org/wiki/Unsupervised_learning">unsupervised</a> (explorative) and <a href="https://en.wikipedia.org/wiki/Supervised_learning">supervised</a> (classification) <strong>machine learning methods</strong> to come up with a complex mathematical descriptor that helps use to predict when our machine is likely going to fail. Another term that’s lately seen a lot of hype is <strong>deep learning</strong>. While its proponents emphasise it as necessary step towards artificial intelligence, at its very core it’s just the extension of a set of conventional machine learning methods called <a href="https://en.wikipedia.org/wiki/Artificial_neural_network">neural networks</a>, in which software mimics the interconnection and interaction of neurons in a simple brain.</p>
+
+<p>What is real <strong>artificial intelligence</strong>? In a recent TechCrunch article <a href="http://linkis.com/7TBCV">Breaking The Barrier of Humans And Machines</a> author <a href="https://twitter.com/sujamthe">Sudha Jamtje</a> says <em>“Machine learning and deep learning applied to smart things changes the human-machine interface. We are reaching an era of questioning what is artificial about AI. If human intelligence can be replicated, and human experience can be deep learned, the barrier between man and machine will begin to crumble.”</em> That’s a rather philosophical view. On a more practical level, artificial intelligence describes software that dynamically choses the optimal combination of methods for the solution of a problem, often at very short temporal scales. One of the most beautiful examples of artificial intelligence can often be seen in robotics, as in this video of <a href="http://www.idsc.ethz.ch/research-dandrea/research-projects/aerial-construction.html">drones that cooperatively build a bridge</a>:
+<br /></p>
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CCDIuZUfETc" frameborder="0" allowfullscreen=""></iframe>
+</center>
+<p><br />
+Artificial Intelligence is not trivial and even seasoned data scientists are out of their depth here, I suppose. Good AI is developed by very specialised, highly interdisciplinary teams.</p>
+
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+          <li>
+            <a href="https://twitter.com/BorisAdryan"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">BorisAdryan</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Structured and unstructure thoughts. Often IoT-related. Sometimes education-related. By Boris Adryan.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

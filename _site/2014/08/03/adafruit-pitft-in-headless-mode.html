@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Adafruit PiTFT in headless mode</title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4444/2014/08/03/adafruit-pitft-in-headless-mode.html">
+  <link rel="alternate" type="application/rss+xml" title="Opinions &amp; Experiments" href="/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">Opinions &amp; Experiments</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+            <a class="page-link" href="/about/">Author</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Adafruit PiTFT in headless mode</h1>
+    <p class="post-meta">
+      <time datetime="2014-08-03T14:17:23+02:00" itemprop="datePublished">
+        
+        Aug 3, 2014
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="/content/images/2015/09/pitft.jpg" alt="" /></p>
+
+<p>I recently purchased the <a href="http://www.adafruit.com/products/1601">Adafruit PiTFT screen</a> to give one of my otherwise headless Raspberry Pis an onboard display. This 2.8″ touch screen is fairly low-spec with 320×240 pixels, but when you think about <a href="http://www.nbcnews.com/id/4758931/ns/technology_and_science-tech_and_gadgets/t/new-technology-relies-human-visual-system/#.U95KKlY6lSY">the Orb</a> as one-pixel browser, then that’s plenty of real estate for status messages. In fact one of my reasons for this purchase was the <a href="https://learn.adafruit.com/adafruit-pitft-28-inch-resistive-touchscreen-display-raspberry-pi">tutorial on the Adafruit Learning System</a> that describes step-by-step how to set up the PiTFT screen as default tty1 output, which allows one to follow much of the boot process when the Raspberry Pi starts into the Raspian OS, including the display of its IP address. Adafruit go a little further and also show you how to configure the X windows environment (the system that displays the graphical desktop) to leverage both display and touch control capabilities of the PiTFT.</p>
+
+<p>I run a couple of web services and my overall aim was to use <a href="http://nodered.org">Node-RED</a> for status checks and occassional messages on the PiTFT. As Node-RED runs on all of my Raspberry Pis by default, my plan was simple: Redirect the console log (available through the debug node) to framebuffer <em>/dev/fb1</em>, as the PiTFT is represented through the Adafruit kernel hack.</p>
+
+<p>Unfortunately, my knowledge of hardware drivers and abstraction layers under Linux is rather limited. As far as I could piece together from <a href="https://www.kernel.org/doc/Documentation/fb/fbcon.txt">documentation on kernel.org</a>, a framebuffer is nothing but a file representation (e.g. in the device directory as <em>/dev/fb1</em>) of a 240 (lines) x 360 (columns) x 24 bit (8 bit RGB) memory. In fact, doing a <code class="highlighter-rouge">sudo cat /dev/urandom &gt; /dev/fb1</code> fills the PiTFT screen with random pixels before failing because the device fb1 “is full”. There are quite a few programs that can write directly to a framebuffer, most notably framebuffer image viewer <a href="https://www.kraxel.org/blog/linux/fbida/">fbi</a> that just requires the <em>-d /dev/fb1</em> option to display bitmap files on the PiTFT. Other programs or services need to do a little bit more work in the background, for example can <a href="https://github.com/notro/fbtft/wiki/Boot-console">fbcon</a> emulate a text console and dynamically represent it as bitmap in the framebuffer. The Adafruit tutorial shows how through adding <em>fbcon=map:10</em> to <em>/boot/cmdline.txt</em> the standard boot console tty1 can be displayed on the PiTFT.</p>
+
+<p>For custom messages on the PiTFT thus I could see a few different options: For console output,</p>
+
+<ol>
+  <li>connect a USB keyboard to the Raspberry Pi and work directly on tty1; (no, really not!)</li>
+  <li>somehow convince fbcon or the <a href="https://github.com/notro/fbtft/wiki/Boot-console">fb boot console</a> to work with a different tty (or /dev/pts/xyz) — and I wasted a week’s worth of evenings unsuccessfully trying this; if <a href="https://github.com/notro">Notro</a> reads this and knows how to help, please get in touch! A post to <a href="http://forums.adafruit.com/viewtopic.php?f=47&amp;t=57717">Adafruit’s forum</a> also was of limited utility.</li>
+</ol>
+
+<p>or by ‘graphical means’ either write Node-RED statuses into</p>
+
+<ol>
+  <li>a bitmap file for display with fbi or</li>
+  <li>a HTML file for display in a <a href="http://www.niteoweb.com/blog/raspberry-pi-boot-to-browser">window-less Chromium session under X</a>. The latter is especially appealing in the light of recent developments in which people marry Node-RED goodness with nice graphical output, see e.g. <a href="https://twitter.com/LawrenceGrif/status/492638060841295872/photo/1">Lawrence Griffith’s tweet</a>.</li>
+</ol>
+
+<p>Ultimately, I discovered <a href="http://sourceforge.net/projects/fbtext/">fbtext</a>, a no-thrills framebuffer text viewer. To get going on the Raspberry Pi, I had to unpack the latest .tar.gz file from SourceForge, rename Makefile.fbcon into Makefile, run make, and there it was: fbtext in all its glory. The picture above shows the result of issuingÂ <em>sudo ./fbtext -d /dev/fb1 /boot/cmdline.txt</em>, and there seem to be a few options to control wrapping behaviour and font settings — things I still need to explore further.</p>
+
+<p>I’ve also already tried the utility of fbtext from Node-RED and I’m happy to report that the flow below with the exec node does very much what one would expect.</p>
+
+<p><img src="/content/images/2015/09/triggerFBtxt.png" alt="" /></p>
+
+
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+          <li>
+            <a href="https://twitter.com/BorisAdryan"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">BorisAdryan</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Structured and unstructure thoughts. Often IoT-related. Sometimes education-related. By Boris Adryan.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

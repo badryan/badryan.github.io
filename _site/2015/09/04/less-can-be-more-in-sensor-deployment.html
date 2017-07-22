@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Less can be more in sensor deployment</title>
+  <meta name="description" content="Despite the ever decreasing prices for Internet-connected devices, sensor deployment doesn’t necessarily become cheaper.">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4444/2015/09/04/less-can-be-more-in-sensor-deployment.html">
+  <link rel="alternate" type="application/rss+xml" title="Opinions &amp; Experiments" href="/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">Opinions &amp; Experiments</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+            <a class="page-link" href="/about/">Author</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Less can be more in sensor deployment</h1>
+    <p class="post-meta">
+      <time datetime="2015-09-04T08:38:27+02:00" itemprop="datePublished">
+        
+        Sep 4, 2015
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><strong>Despite the ever decreasing prices for Internet-connected devices, sensor deployment doesn’t necessarily become cheaper.</strong></p>
+
+<p>One can still find Arduino-compatible shields in the range of $30+, but in 2014 the <a href="https://en.wikipedia.org/wiki/ESP8266">ESP8266 chip</a> that was originally marketed as WiFi module for microcontrollers was found to have sufficient horsepower to function as standalone system - for one tenth of the price of a WiFi shield. I can only assume that the price decay is similar when you are an electronics manufacturer and can purchase components in bulk. With the notorious “<a href="http://readwrite.com/2013/09/30/how-big-the-internet-of-things-could-become">50 billion connected devices by 2020</a>” we keep hearing about, it is clear that nobody wants to add another 200% to the price of their product just to have it connected.</p>
+
+<p>What might work well in consumer products can be a nightmare in smart city or smart building contexts. Drilling holes into streets, mounting devices on lamp posts or even establishing a basic physical IT infrastructure in an old building doesn’t come cheap. In fact, the price for labour is even likely to increase due to inflation. <strong>Everyone in the emerging IoT verticals is trying to pitch the potential savings, but what does it help that the price of an Internet-connected sensor has dropped to cents when its deployment still costs a comparative fortune?</strong> Lucky you, because maybe you don’t have to.
+<br />
+####Why your data scientist will be grateful for less data</p>
+
+<p>Generally, when you’re trying to address a question with data, the rule is: the more the better. That’s common sense. If you’re allowed a phone call to ask somebody you haven’t seen before five questions about their looks, you’re more likely to recognise them at the airport pickup than when you can only ask them one. But, besides appearing creepy, what would twenty questions do for you? What would you ask? <em>Can you roll your tongue? And what’s the colour of the other eye brow?</em> The first question would probably reveal relatively little information as you don’t have access to this <em>feature</em> when you need it, while the second question is extremely likely to yield <em>redundant</em> information, as most if not all people have same-coloured eye brows.</p>
+
+<p>In every machine learning exercise (be it <strong><em>classification</em> or <em>prediction</em>: the ultimate reason for collecting data</strong> in the first place), one of the first steps is <em>feature reduction</em>. Because most calculations are costly and can in the worst case even yield false results, we aim to remove those features that carry only little information to master the task at hand, and a match to two or more different features that are highly correlated (“left eye-brow”, “right eye-brow”) may give us a false sense of knowing already enough. While in our example it’s rather trivial to decide which features should be kept (I’d go for height, hair colour…), a computer needs to produce a correlation matrix first.</p>
+
+<p>In other words, a data scientist’s job is often already <strong>half-way done once the data is cleaned and the most predictive features have been identified</strong>.</p>
+
+<p><sub><strong>Anecdote:</strong> <a href="http://www.thingslearn.com">thingslearn</a> originated from a few interesting machine learning problems in molecular biology. We had a really exciting paper on dealing with <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002725">highly correlated features in genomic data</a> and which of those correlated features are the most predictive and meaningful.</sub>
+<br />
+####Identifying redundancy: An example
+Imagine a company that wants to deploy temperature sensors in a building. What’s a good number of sensors to put in? And at what spacing? This obviously depends on what they want to find out.</p>
+
+<p>Say, it’s a large, open plan office with hot desks, no pun intended, as you can see in a moment: While in principle there is air conditioning that allows spatially defined temperature control, many desks in the office remain unused because people complain about heat. So there’s something to be done.</p>
+
+<p><img src="/content/images/2015/09/cc-1.jpg" alt="" /></p>
+
+<p>In the <strong>example in the figure</strong>, when deploying 16 sensors in a 4x4 grid (A1, A2, …, D4), we would find that 5 grid sectors show a profile with increasing temperature over time. Visually, we can immediately recognise that the grid sectors fall into two <em>classes</em>, one with stable temperature and one with instability. When we draw up an all-against-all comparison, we can also infer that computationally.</p>
+
+<p>The temperature profiles are <em>correlated</em>. In other words, whenever any of C1, D1, C2, D2 or A4 go up in temperature, we can infer from our correlation matrix that also the other four in this group are going up, and we should probably intervene. In a machine learning context, we could arbitrarily chose C2, and throw the measurements for C1, D1, D2 and A4 away. That’s what <em>feature reduction</em> does. (In practise it’s not entirely arbitrarily, but for the reason of simplicity we can assume so.)
+<br />
+####Practical lesson
+What we can learn from above example is the following: Given the <strong>prior knowledge</strong> of our the temperature profile would suggest that -<strong>for the long term</strong>- we do only need to deploy a single sensor in this office. We’ve established that most desks are in areas with a stable temperature profile. They won’t need intervention and for this reason we can do without any further measurements. We’ve also established two hot spots with a strong correlative pattern: When the temperature in one hot spot (C1, C2, D1, D2) rises, it’ll also rise in A4. Hence, we could probably manage by just looking at a sensor in one of the hot spot grid sectors.</p>
+
+<p>Now we’ve already invested the money and installed 16 sensors before we have this insight, I hear you say. Well, true, but the lesson here is that a <strong>temporary deployment</strong> with mobile, leased sensors and <strong>analytics on preliminary data</strong> can help you save a lot of money. It’s only after this step that you have to decide how many temperature sensors you need to install permanently, with all implications regarding building modification etc.
+<br />
+####Other applications
+In collaboration with <a href="http://www.ethosvo.org">Ethos</a> and <a href="http://www.opensensors.io">OpenSensors</a> we have previously shown the utility of such approach in a smart city context: Parking lots often show correlative patterns, so knowing the occupancy of a few lots allows the prediction of occupancy across a much wider geographical area.</p>
+
+<p>Similar correlative patterns may exist e.g. along the routes of garbage collections. Knowing that, for a particular neighbourhood, the filling level of a few indicative bins allows the driver to skip a few houses can yield significant time savings when accumulated over an entire city.</p>
+
+<p>The above example was obviously full of simplifications. <strong>Modern computational methods can take into account any spatio-temporal data, different grid topologies, unevenly distributed sensors and multi-dimensional measurements.</strong> If you have any questions and would like to learn more, please do get in touch.</p>
+
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+          <li>
+            <a href="https://twitter.com/BorisAdryan"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">BorisAdryan</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Structured and unstructure thoughts. Often IoT-related. Sometimes education-related. By Boris Adryan.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

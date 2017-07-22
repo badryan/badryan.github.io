@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Play Minecraft via MQTT and Node-RED</title>
+  <meta name="description" content="As man flu stopped me from doing any “meaningful work” this weekend, I took the opportunity to have a play with the Minecraft Python API for the Raspberry Pi...">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4444/2014/05/11/play-minecraft-via-mqtt-and-node-red.html">
+  <link rel="alternate" type="application/rss+xml" title="Opinions &amp; Experiments" href="/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">Opinions &amp; Experiments</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+            <a class="page-link" href="/about/">Author</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Play Minecraft via MQTT and Node-RED</h1>
+    <p class="post-meta">
+      <time datetime="2014-05-11T16:33:17+02:00" itemprop="datePublished">
+        
+        May 11, 2014
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><a href="http://logic.sysbiol.cam.ac.uk/?attachment_id=1500"><img src="http://logic.sysbiol.cam.ac.uk/wp-content/uploads/2014/05/photo-300x224.jpg" alt="photo" /></a>As man flu stopped me from doing any “meaningful work” this weekend, I took the opportunity to have a play with the Minecraft Python API for the <a href="http://raspberrypi.org">Raspberry Pi</a>, especially since on Saturday I’ve had a refresher course at the <a href="http://camjam.me">Cambridge Raspberry Jam</a>Â (CamJam) with the very <a href="https://twitter.com/CraigArgh">Craig Richardson</a>, who maintains a great <a href="http://arghbox.wordpress.com">Python/Minecraft blog</a> and is going to publish a book on the topic soon.</p>
+
+<p>If you haven’t heard of <a href="https://minecraft.net">Minecraft</a> and don’t have children, you can stop reading now. For people with children up to the teenage years, it’s likely that you’re actually facing a certain degree of Minecraft craze in your house already. Whatever it is that turns our children into hole digging, coal mining and house building computer addicts, it’s very powerful. To quote loosely from a presentation by Craig at a recent CamJam, in his experience as a teacher, if you simply add the word “Minecraft” to any exercise, the children double their effort and focus.</p>
+
+<p>Mojang, the company who makes Minecraft, provides a free-to-download version of Minecraft for the Raspberry Pi as well as a set of libraries representing a Python API. This is meant as incentive for children to learn Python, and programmatically interact with the Minecraft world. There is a lot of information out there and on Craig’s blog there are plenty of links to projects that people have created with the API.</p>
+
+<p><strong>Background</strong></p>
+
+<p>My two older children are six and eight, and the older one has just managed to get to grips with basic programming logic using <a href="http://scratch.mit.edu">Scratch</a>. While he has expressed the wish to learn Python, I don’t think he’s quite ready yet to do more than using Python as interactive calculator. At the same time, they hear me going on about <a href="http://mqtt.org">MQTT</a>Â and <a href="http://nodered.org">Node-RED</a>. In brief, MQTT is a messaging protocol that runs over TCP/IP and allows for very lean data communication, frequently in a machine-to-machine (“Internet of Things”, IoT) context. MQTT messages can be read like an email, where the so-called <em>topic</em> is the subject, and the <em>payload</em> is the body of the message. Node-RED is a rapid development tool for the IoT, which allows the quick design of workflows in a graphical editor using a <a href="http://nodejs.org">node.js</a> backbone. Some people say Node-RED is “Scratch for adults”, and I don’t see anything wrong about that.</p>
+
+<p>This is where my plan came in: Rather than exposing my children to Python and the frustration of having to use the Minecraft API with less than a rudimentary understanding of the language, I wanted them to be able to use the API via Node-RED. As Node-RED can’t talk to Minecraft directly (although I’m tempted to sniff around TCP port 4711 that is used by the API), I’m using Node-RED to dispatch MQTT messages that are taken up by a Python script in the background, which then translates this into the movement of the player in the Minecraft world. The message passing between Node-RED and Python happens through a so-called MQTT broker, and I’ve used <a href="http://mosquitto.org">mosquitto</a>. So it’s <strong>Node-RED –MQTT-&gt; mosquitto –MQTT-&gt; Python –TCP-&gt; Minecraft</strong>.</p>
+
+<p><strong>How-to</strong></p>
+
+<ol>
+  <li>Install Minecraft and the Python API on the Raspberry Pi as <a href="http://arghbox.wordpress.com/2013/06/16/minecraft-pi-api-setting-up/">described on Craig’s blog</a>.</li>
+  <li>Install Node-RED as described on the <a href="http://c-mobberley.com/wordpress/2013/10/03/raspberry-pi-hosting-node-red-take-the-crap-out-of-developing-automation-the-internet-of-things-iot/">Hardware Hacks blog</a>.</li>
+  <li>Install mosquitto and mosquitto clients (i.e. mosquitto_pub) via <em>sudo apt-get install mosquitto mosquitto-clients</em></li>
+  <li>Install <a href="http://www.eclipse.org/paho/">Eclipse Paho MQTT</a> libraries for Python via <em>sudo pip install paho-mqtt</em></li>
+  <li>Test if Minecraft, Node-RED, mosquitto et al. work.</li>
+  <li>Assuming you have Node-RED running as a service (here’s a <a href="http://c-mobberley.com/wordpress/2014/01/12/raspberry-pi-node-red-startstoprestart-script/">hint on how to have this at startup</a>), you also want to start up the mosquitto broker by issuing <em>mosquitto -p 1884</em> (a port of your choosing).</li>
+</ol>
+
+<p>I took my inspiration for dealing with MQTT messages in Python from the “<em>simple subscribe example</em>” on the <a href="http://mosquitto.org/documentation/python/">mosquitto Python page</a>, making the relevant adjustments that are necessary through mosquitto’s handover to Paho. I’m too lazy to upload my .py code now (remember, I’m ill), but the code is short enough to get the idea from the screen shot.</p>
+
+<p><img src="/content/images/2015/09/code-1.png" alt="" /></p>
+
+<p>(actually, I find the Minecraft and MQTT APIs pretty amazing — just 36 lines of commented code!)</p>
+
+<p>If you’re in a Minecraft world (you’re on your own here, or ask your children) and the Python script is running, you can test it using <em>mosquitto_pub -p 1884 -t /fwd -m “5″</em> (as in: go five steps forwards) or open the Node-RED GUI.</p>
+
+<p><img src="/content/images/2015/09/noderedmine.jpg" alt="" /></p>
+
+<p>Here, I simply use a inject nodes with topics “/fwd”, “/bck” etc. and payload “5″ to get the equivalent output through my MQTT out node on localhost port 1884.</p>
+
+<p>Enjoy your own explorations!</p>
+
+
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+          <li>
+            <a href="https://twitter.com/BorisAdryan"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">BorisAdryan</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Structured and unstructure thoughts. Often IoT-related. Sometimes education-related. By Boris Adryan.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
