@@ -58,6 +58,9 @@
             
             
           
+            
+            
+          
         </div>
       </nav>
     
@@ -82,7 +85,7 @@
   <div class="post-content" itemprop="articleBody">
     <p><img src="/content/images/2015/09/nook-300x226.jpg" alt="" /></p>
 
-<p>At the recent <a href="https://iot.ghost.io/open-iot-hackathon/">Open IoT Hackathon</a> my closest competitor Ajith Shadakshari presented a hardware hack that utilised a <a href="http://en.wikipedia.org/wiki/Nook_Simple_Touch">Nook Simple Touch</a> e-reader device as a low-energy wireless screen to dynamically display room occupancy, as informed by a data stream. I’m usually not one for hardware hacks as it is quite simple to brick your device and lose your investment, however, the low cost of the Nook (£50 at the time of writing) convinced me to have a go at it.</p>
+<p>At the recent <a href="/2014/03/10/open-iot-hackathon.html">Open IoT Hackathon</a> my closest competitor Ajith Shadakshari presented a hardware hack that utilised a <a href="http://en.wikipedia.org/wiki/Nook_Simple_Touch">Nook Simple Touch</a> e-reader device as a low-energy wireless screen to dynamically display room occupancy, as informed by a data stream. I’m usually not one for hardware hacks as it is quite simple to brick your device and lose your investment, however, the low cost of the Nook (£50 at the time of writing) convinced me to have a go at it.</p>
 
 <p>Hacking Nook devices seems to be a common sport and people with jailbreak/product hacking experience will find plenty of <a href="http://lmgtfy.com/?q=hacking+nook+simple+touch">tutorials on the internet</a>. This was my first exploration in this direction, and I didn’t want to “just hack it” but turn it into a useful home product: A wireless display for sensor data and Twitter updates that can go several days without recharging.</p>
 
@@ -100,7 +103,7 @@
 <p>I’m not going to copy&amp;paste commands into here, but will highlight relevant bits from other tutorials which I followed. My main guide was <a href="http://http://www.alexroddie.com/2013/06/Nook-Simple-Touch-rooted-minimalist-writing-tablet.html">Turning a Nook Simple Touch into a minimalist writing tablet</a> by Alex Roddie. He pointed me to two forum entries at a mobile developer website,</p>
 
 <ul>
-  <li><a href="http://forum.xda-developers.com/showthread.php?t=2040351">Rooting the Nook with NookManager – aÂ graphical rooter</a></li>
+  <li><a href="http://forum.xda-developers.com/showthread.php?t=2040351">Rooting the Nook with NookManager – a graphical rooter</a></li>
   <li><a href="http://forum.xda-developers.com/showthread.php?t=2086582">Installing NTGAppsAttack – Google Apps installer add-on for NookManager</a></li>
 </ul>
 
@@ -110,7 +113,7 @@
 
 <p><strong>Installing it</strong></p>
 
-<p>The screen you can see above shows a HTML/CSS encoded website served from my <a href="https://iot.ghost.io/airpi-speaks-nodered/">Raspberry Pi running NodeRED</a>. Details on the software side of things to follow, in brief it’s using the <em>template</em> node to take data from my AirPi to make the website.</p>
+<p>The screen you can see above shows a HTML/CSS encoded website served from my <a href="/2014/02/12/airpi-speaks-nodered.html">Raspberry Pi running NodeRED</a>. Details on the software side of things to follow, in brief it’s using the <em>template</em> node to take data from my AirPi to make the website.</p>
 
 <p>As Ajith had pointed out in his project description, he was using the <a href="https://play.google.com/store/apps/details?id=com.dolphin.browser">Dolphin Browser Mini</a> that allows to run a web browser in windowless mode. The interval refresh of the page displaying all info is part of the NodeRED flow, as detailed in <a href="http://l0l.org.uk/2014/01/simple-node-red-web-page/">Layer Zero Lab’s excellent blog post</a>.</p>
 
@@ -118,9 +121,9 @@
 
 <p>…the awkward moment when you want to show off your Nook wireless screen, and it shows you the Barnes and Noble screen saver. Although already looking like a proper IoT device, in its core your Nook still thinks it’s an e-book reader. Not pressing any button or the screen results in screen saver activity and various sleep modes. Plus, it also think it’s a phone and wastes and awful lot of energy running phone apps. Both behaviours are not great if you want to leave your display for remote updates, without user interference.</p>
 
-<p>The e-book software doesn’t support “no screen saver” and setting it to the slowest response just delays the inevitable. I’ve come to use the <a href="https://play.google.com/store/apps/details?id=schaze.waketimer">WakeTimer</a> which keeps both the screen and the wifi connection alive. There are alternative suggestions including the manipulation of an internal SQLite database which contains the seconds to sleep, but starting up WakeTimer after every reboot isn’t too bad for now.</p>
+<p>The e-book software doesn’t support “no screen saver” and setting it to the slowest response just delays the inevitable. I’ve come to use the <a href="https://play.google.com/store/apps/details?id=schaze.waketimer">WakeTimer</a> which keeps both the screen and the wifi connection alive. There are alternative suggestions including the manipulation of an internal SQLite database which contains the seconds to sleep, but starting up WakeTimer after every reboot isn’t too bad for now.</p>
 
-<p>The energy wasted by the completely unnecessary phone services amounted to ~75% of the battery. In Alex Roddie’s blog post, he identifies those issues and recommends removal of <em>Phone.apk</em> and <em>TelephonyProvider.apk</em> in <em>/system/app/</em> as possible solutions. However, he talks about the ES File Explorer in this context, and in my hands that application only gave me grief because for some reason <em>/system</em> was mounted on a read-only partition, which opposite to some claims was not changeable on my Nook. Ultimately, I resorted to some manly command-line tinkering as root using a terminal program (can’t remember which one). I followed the example shown on <a href="http://stackoverflow.com/questions/5467881/a-terminal-command-for-a-rooted-android-to-remount-system-as-read-write">StackOverflow</a>Â to remount /system as read/write partition (note that the exact mount points may be called differently on your device). Thereafter, I entered <em>/system/app</em> with a chainsaw and deleted most of the applications listed in this forum entry: <a href="http://forum.xda-developers.com/showthread.php?t=1933615">Nook Simple Touch (N2E) power management / battery optimization</a></p>
+<p>The energy wasted by the completely unnecessary phone services amounted to ~75% of the battery. In Alex Roddie’s blog post, he identifies those issues and recommends removal of <em>Phone.apk</em> and <em>TelephonyProvider.apk</em> in <em>/system/app/</em> as possible solutions. However, he talks about the ES File Explorer in this context, and in my hands that application only gave me grief because for some reason <em>/system</em> was mounted on a read-only partition, which opposite to some claims was not changeable on my Nook. Ultimately, I resorted to some manly command-line tinkering as root using a terminal program (can’t remember which one). I followed the example shown on <a href="http://stackoverflow.com/questions/5467881/a-terminal-command-for-a-rooted-android-to-remount-system-as-read-write">StackOverflow</a> to remount /system as read/write partition (note that the exact mount points may be called differently on your device). Thereafter, I entered <em>/system/app</em> with a chainsaw and deleted most of the applications listed in this forum entry: <a href="http://forum.xda-developers.com/showthread.php?t=1933615">Nook Simple Touch (N2E) power management / battery optimization</a></p>
 
 <p><strong>At this stage, on a completely recharged battery, my Nook Simple Touch runs about two-three days as wireless display without any further intervention (other than starting up WakeTimer and Dolphin).</strong></p>
 

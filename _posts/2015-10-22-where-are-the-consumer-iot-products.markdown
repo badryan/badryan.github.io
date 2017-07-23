@@ -10,8 +10,9 @@ tags:
 
 Last Tuesday saw another special event as part of the [IoT London Meetup](http://www.meetup.com/iotlondon/) series, when our host and organiser [Alex Deschamps-Sonsino](https://twitter.com/iotwatch) invited us to the City Hall.<br>
 <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Our poshest host yet! <a href="https://twitter.com/hashtag/iotlondon?src=hash">#iotlondon</a> <a href="https://t.co/Y3vrRVwzuW">pic.twitter.com/Y3vrRVwzuW</a></p>&mdash; London IOT Meetup (@iotlondon) <a href="https://twitter.com/iotlondon/status/656512655394516993">October 20, 2015</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-The focus of this meeting was **a showcase of local IoT innovation**, and with London being one of the hotbeds for the Internet of Things in Europe (if not in the world), I had great expectations. The event had been paraphrased *The (Connected) Living Room* because of the name of the venue (aka [London's Living Room at City Hall](*http://www.londonslivingroom.co.uk)), and somehow I had envisioned **creative, innovative and compelling examples of consumer products** for our connected future.
-<br>
+The focus of this meeting was **a showcase of local IoT innovation**, and with London being one of the hotbeds for the Internet of Things in Europe (if not in the world), I had great expectations. The event had been paraphrased *The (Connected) Living Room* because of the name of the venue (aka [London's Living Room at City Hall](http://www.londonslivingroom.co.uk)), and somehow I had envisioned **creative, innovative and compelling examples of consumer products** for our connected future.
+
+
 Unfortunately, my main comment remained: **This is not the Internet of Things.**
 
 <blockquote class="twitter-tweet" lang="en"><p lang="und" dir="ltr">FYI <a href="https://twitter.com/hashtag/IoT?src=hash">#IoT</a> <a href="http://t.co/Ll6iJyXXIV">pic.twitter.com/Ll6iJyXXIV</a></p>&mdash; Kevin Ashton (@Kevin_Ashton) <a href="https://twitter.com/Kevin_Ashton/status/645193490641477632">September 19, 2015</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

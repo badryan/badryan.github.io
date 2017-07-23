@@ -34,6 +34,8 @@ I'm missing that book for the technical aspects of IoT. Sure, there are speciali
 
 **I've started to write that book.** It is daunting as I'm obviously not an expert in everything that is relevant to IoT. My draft table of contents currently has 109 headings, many of which make me shudder: Talking about wireless just requires an introduction of [Maxwell's equation](https://en.wikipedia.org/wiki/Maxwell%27s_equations), and if you're thinking about IoT platforms you should have heard about the [CAP theorem](https://en.wikipedia.org/wiki/CAP_theorem), to just name a few. But I believe that "B.Eng. IoT" students deserve a good book and that graduates need a solid foundation that leaves them with deep knowledge, and not just as implementation monkeys.
 
-<center>==I may **fail**. But I want to try. So far the journey has been fun.==</center>
+
+**I may _fail_. But I want to try. So far the journey has been fun.**
+
 
 Please get in touch if you're interested to help (*badryan@gm...*). I need contacts to publishers, I need proof-readers, I need people with domain knowledge of all aspects of IoT that I can ask. Quite probably, I may also need a few co-authors to make this book happen in a reasonable timeframe, i.e. during the next year. Also, if you've written a technical book before, I may have a few questions...

@@ -15,9 +15,9 @@ Let's talk about my current pet hate, **sleep trackers**. It's been clear since 
 
 ![](/content/images/2015/09/wearable_health.png)
 <br>
-My absolute darling and favourite wearable is the **day light tracker** *SunSprite*, a device that continuously tracks your exposure to day light in terms of brightness and UV levels. It scores best in terms of objectiveness and informativeness for me. Too little light is bad, as it screws with vitamin D production and melatonin metabolism. Too much UV is bad, you know, because sunburn. However, it takes a lot of practice to accurately judge whether one has had enough light for a day, or how much UV exposure there is (both especially in cloudy conditions). The SunSprite provides that sense we lack. While their app is very basic (but sufficient), upon my request they opened their data store and users can now [programmatically download their data](https://iot.ghost.io/using-sunsprite-like-an-iot-device/) for further analysis.
+My absolute darling and favourite wearable is the **day light tracker** *SunSprite*, a device that continuously tracks your exposure to day light in terms of brightness and UV levels. It scores best in terms of objectiveness and informativeness for me. Too little light is bad, as it screws with vitamin D production and melatonin metabolism. Too much UV is bad, you know, because sunburn. However, it takes a lot of practice to accurately judge whether one has had enough light for a day, or how much UV exposure there is (both especially in cloudy conditions). The SunSprite provides that sense we lack. While their app is very basic (but sufficient), upon my request they opened their data store and users can now [programmatically download their data](/2014/12/07/using-sunsprite-like-an-iot-device.html) for further analysis.
 
-I [wrote a web app](https://iot.ghost.io/hosted-node-red-without-budget/) to visually represent data in a calendar view, a function not part of their iOS app. So if you visit the
+I [wrote a web app](/2015/05/13/hosted-node-red-without-budget.html) to visually represent data in a calendar view, a function not part of their iOS app. So if you visit the
 
 * **[SunSprite Calendar View](https://fred.sensetecnic.com/public/adryan/index)**
 

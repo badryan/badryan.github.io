@@ -58,6 +58,9 @@
             
             
           
+            
+            
+          
         </div>
       </nav>
     
@@ -88,7 +91,7 @@
 
 <p><strong>Background</strong></p>
 
-<p>My two older children are six and eight, and the older one has just managed to get to grips with basic programming logic using <a href="http://scratch.mit.edu">Scratch</a>. While he has expressed the wish to learn Python, I don’t think he’s quite ready yet to do more than using Python as interactive calculator. At the same time, they hear me going on about <a href="http://mqtt.org">MQTT</a>Â and <a href="http://nodered.org">Node-RED</a>. In brief, MQTT is a messaging protocol that runs over TCP/IP and allows for very lean data communication, frequently in a machine-to-machine (“Internet of Things”, IoT) context. MQTT messages can be read like an email, where the so-called <em>topic</em> is the subject, and the <em>payload</em> is the body of the message. Node-RED is a rapid development tool for the IoT, which allows the quick design of workflows in a graphical editor using a <a href="http://nodejs.org">node.js</a> backbone. Some people say Node-RED is “Scratch for adults”, and I don’t see anything wrong about that.</p>
+<p>My two older children are six and eight, and the older one has just managed to get to grips with basic programming logic using <a href="http://scratch.mit.edu">Scratch</a>. While he has expressed the wish to learn Python, I don’t think he’s quite ready yet to do more than using Python as interactive calculator. At the same time, they hear me going on about <a href="http://mqtt.org">MQTT</a> and <a href="http://nodered.org">Node-RED</a>. In brief, MQTT is a messaging protocol that runs over TCP/IP and allows for very lean data communication, frequently in a machine-to-machine (“Internet of Things”, IoT) context. MQTT messages can be read like an email, where the so-called <em>topic</em> is the subject, and the <em>payload</em> is the body of the message. Node-RED is a rapid development tool for the IoT, which allows the quick design of workflows in a graphical editor using a <a href="http://nodejs.org">node.js</a> backbone. Some people say Node-RED is “Scratch for adults”, and I don’t see anything wrong about that.</p>
 
 <p>This is where my plan came in: Rather than exposing my children to Python and the frustration of having to use the Minecraft API with less than a rudimentary understanding of the language, I wanted them to be able to use the API via Node-RED. As Node-RED can’t talk to Minecraft directly (although I’m tempted to sniff around TCP port 4711 that is used by the API), I’m using Node-RED to dispatch MQTT messages that are taken up by a Python script in the background, which then translates this into the movement of the player in the Minecraft world. The message passing between Node-RED and Python happens through a so-called MQTT broker, and I’ve used <a href="http://mosquitto.org">mosquitto</a>. So it’s <strong>Node-RED –MQTT-&gt; mosquitto –MQTT-&gt; Python –TCP-&gt; Minecraft</strong>.</p>
 

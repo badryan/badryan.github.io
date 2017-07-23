@@ -28,5 +28,5 @@ Over the past two and a half months I have worked on the first chapter, Physical
 
 I'm still looking for co-authors who might be interested in particular sections of the book, or people with expert knowledge to validate my explanations.
 
-<br><br>
+<br>
 *Postscriptum*: From a practical perspective, I've found Scrivener a very useful tool to structure and draft my content and collate information from the interwebs. I'm using TeXPad to do the proper typesetting in LaTeX and EazyDraw to generate EPS figures (35 line art or gray scale figures). So far I've had to use two pictures, for which I managed to obtain permission to reproduce.

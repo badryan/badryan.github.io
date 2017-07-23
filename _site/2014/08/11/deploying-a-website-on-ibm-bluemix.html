@@ -58,6 +58,9 @@
             
             
           
+            
+            
+          
         </div>
       </nav>
     
@@ -91,15 +94,15 @@ As I shared a few weeks ago, I’ve started a small <a href="http://www.thingsle
 
 <p>What I really like about buildpacks and the 30-second-tutorial on the Github page is that it uses the command line, and leaves much of the fancy but in my opinion too complex GUI of Bluemix behind. To implement any changes in your Bluemix area, you will need to install the <a href="http://docs.cloudfoundry.org/devguide/installcf/">cf Command Line Interface</a> (CLI, or ‘cf’ in any syntax). (<strong>THAT’S SORT OF STEP 1</strong>).</p>
 
-<p>As I wasn’t quite sure what exactly is needed to create a website, and rather than creating a file <em>index.php</em> with no other content but “<?php phpinfo() ?>”, I decided to <em>git clone</em> the recommended example applicationÂ <a href="https://github.com/dmikusa-pivotal/cf-ex-php-info">cf-ex-php-info</a> (<strong>STEP 2</strong>), which comes with a couple of useful files, for example <em>manifest.yml</em> that contains most of the configuration for your project.</p>
+<p>As I wasn’t quite sure what exactly is needed to create a website, and rather than creating a file <em>index.php</em> with no other content but <code class="highlighter-rouge">&lt;?php phpinfo() ?&gt;</code>, I decided to <em>git clone</em> the recommended example application <a href="https://github.com/dmikusa-pivotal/cf-ex-php-info">cf-ex-php-info</a> (<strong>STEP 2</strong>), which comes with a couple of useful files, for example <em>manifest.yml</em> that contains most of the configuration for your project.</p>
 
 <p>Not only does the manifest tell CF which buildpack you’d like to include, it also let’s you specific the name, host name and memory limits of your application. For example, with <em>host: willibob</em>, the URL for your project becomes <em>willibob.mybluemix.net</em>. (So, <strong>STEP3</strong>, edit your <em>manifest.yml</em>).</p>
 
 <p>I then instructed CF to work with Bluemix (<em>cf api https://api.ng.bluemix.net</em>), log into my Bluemix account (<em>cf login</em>) and then the most important of all: ‘<em>cf push</em>‘ to upload your files and install the buildpack on the Bluemix server. (These are all <strong>STEP4</strong>). After a perceived eternity, that processes finished and my mini PHP-based website was up and running.</p>
 
-<p><strong>Wait. That’s wasn’t the goal.</strong> We wanted to get <em>thingslearn</em> online. Now I didn’t understand the inner workings of the buildpack nor CF, but I recognise a <strong><em>htdocs</em> directory</strong> when I see one. In the case of the cf-ex-php-info example, the htdocs file contained a <em>index.php</em> as well as a few other files for display. I simply copied all of my directory structure from <em>htdocs</em> on my Raspberry Pi server to the htdocs directory in the <em>cf-ex-…</em> project directory, and issued a ‘<em>cf push</em>‘. Magically, my next visit to willibob showed the all-familiar <em>thingslearn</em> website. (Call that <strong>STEP5</strong> if you want).</p>
+<p><strong>Wait. That’s wasn’t the goal.</strong> We wanted to get <em>thingslearn</em> online. Now I didn’t understand the inner workings of the buildpack nor CF, but I recognise a <strong><em>htdocs</em> directory</strong> when I see one. In the case of the cf-ex-php-info example, the htdocs file contained a <em>index.php</em> as well as a few other files for display. I simply copied all of my directory structure from <em>htdocs</em> on my Raspberry Pi server to the htdocs directory in the <em>cf-ex-…</em> project directory, and issued a <code class="highlighter-rouge">*cf push*</code>. Magically, my next visit to willibob showed the all-familiar <em>thingslearn</em> website. (Call that <strong>STEP5</strong> if you want).</p>
 
-<p><span style="text-decoration: underline;"><span style="color: #000000;"><strong>The really difficult bit…</strong></span></span></p>
+<p><code class="highlighter-rouge">&lt;span style="text-decoration: underline;"&gt;&lt;span style="color: #000000;"&gt;**The really difficult bit…**&lt;/span&gt;&lt;/span&gt;</code></p>
 
 <p><strong>Adjusting the PHP.</strong> Now so far that’s all been relatively easy. Unfortunately, my PHP code that takes care of soliciting visitor emails didn’t work as desired. The server is supposed to inform me via email about any new registrations. However, <a href="https://developer.ibm.com/answers/questions/20048/sendmail-on-bluemix-sending-from-web-form-cf-php-apache-buildpack/?community=bluemix">‘<em>sendmail</em>‘ is not available on Bluemix</a> (as, strictly speaking, we’re not dealing with a Unix system here).</p>
 

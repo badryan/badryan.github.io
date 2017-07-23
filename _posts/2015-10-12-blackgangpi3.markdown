@@ -10,10 +10,11 @@ tags:
 ---
 
 Those of you who follow Twitter for hacking, making and crafting will know "celebrities" [Dr Lucy Rogers](https://twitter.com/drlucyrogers) and [Andy Stanford-Clark](https://twitter.com/andysc). For the past year or so, both have been showing pictures and videos of dinosaurs, and those lucky to see a cheerful Andy SC talk about what sort of fun nonsense one can do with a [Raspberry Pi](https://www.raspberrypi.org) and [Node-RED](http://nodered.org) may have seen the little **computers control animatronic dinosaurs**.
-<center>
+
 ![](http://www.element14.com/community/servlet/JiveServlet/showImage/38-17488-207603/IMG_4194.jpg)
 (Image from Element14 blog)
-</center>
+
+
 <br>
 ## Natural history (not of dinosaurs)
 Part of the story goes that the potential of the animatronic dinosaurs is a lot bigger than what their control boxes allow one to do, and with the help of [James Macfarlane](https://twitter.com/RocketEngines), whose company [Airborne Engineering](http://www.ael.co.uk) builds all sorts of clever electronics, and who happens to be Lucy's partner, together they stringed them up to Raspberry Pis... ...add Andy SC and Node-RED, and you get the picture.

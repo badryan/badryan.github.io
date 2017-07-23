@@ -9,6 +9,7 @@ tags:
 ---
 
 ![](/content/images/2015/09/airpi.jpg)
+
 Introduction and general workflow described below. [Fixing an issue about Xively flooding thereafter](#XivelyIssue).
 
 One of the success stories for young enterpreneurial spirit sparked by the [Raspberry Pi](http://www.raspberrypi.org) is the **AirPi**. After this open-source open-hardware **8-sensor air quality and weather station** originated in a [student competition](http://www.paconsulting.com/raspberry-pi/) to help ‘others reduce their impact on the environment’ using that little computer, one of its inventors ([Tom Hartley](http://www.raspberrypi.org/archives/tag/tom-hartley),@tmhrtly) followed through and made AirPi a commercially available product ([via Tindie](https://www.tindie.com/products/tmhrtly/airpi-kit/)) with meanwhile hundreds of users. See Tom present a nice project summary with plenty of anecdotes on [YouTube](http://www.youtube.com/watch?v=uAF4j4Ru2UY).

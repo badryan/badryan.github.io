@@ -58,6 +58,9 @@
             
             
           
+            
+            
+          
         </div>
       </nav>
     
@@ -84,8 +87,7 @@
 
 <p>Under the organisational lead of <a href="https://twitter.com/IanSkerrett">Ian Skerrett</a> and <a href="https://twitter.com/kartben">Benjamin Cabé</a>, one of the seven main working groups is <strong><a href="http://iot.eclipse.org">Eclipse IoT</a></strong>. This is probably a good moment to explain to the uninitiated reader that <em>Eclipse</em> simply used to be an open source integrated development environment for Java (and still is: <a href="https://www.eclipse.org/downloads/">download the IDE</a>), but over the past almost fifteen years has restructured into a foundation that works language-agnostic on a wide range of projects; very much like <em>Apache</em> used to be a web server and now is a software foundation. Eclipse IoT is an umbrella project that coordinates the work of developers that are primarily based at a dozen companies with an interested in IoT or M2M. Amongst those are major players such as IBM, Bosch and Siemens, but also smaller companies that work in particular corners of the IoT, like dc-square and openHAB.</p>
 
-<p><br />
-I set out to give an overview when and where particular Eclipse IoT projects can help to build IoT solutions. While it’s possible to find all that information in a <a href="http://iot.eclipse.org/projects">table on the Eclipse website</a>, it can be daunting if you’re just getting started on an IoT project to understand what you need and where it fits. Good time to let my artistic streak come through:</p>
+<p>I set out to give an overview when and where particular Eclipse IoT projects can help to build IoT solutions. While it’s possible to find all that information in a <a href="http://iot.eclipse.org/projects">table on the Eclipse website</a>, it can be daunting if you’re just getting started on an IoT project to understand what you need and where it fits. Good time to let my artistic streak come through:</p>
 
 <p><img src="/content/images/2016/04/slide4.png" alt="" /></p>
 
@@ -95,7 +97,7 @@ I set out to give an overview when and where particular Eclipse IoT projects can
 I demonstrated one possible scenario how the <strong>ecosystem</strong> bit helps designing M2M/IoT using this schematic around end device management:
 <img src="/content/images/2016/04/slide6.png" alt="" /></p>
 
-<p>The <a href="http://www.eclipse.org/vorto/index.html">Vorto</a> GUI allows one to provide language-independent descriptions of devices, which via the Vorto code generators can be conveniently translated into objects/classes in any programming language for which such generator exists. (See my <a href="http://iot.ghost.io/hands-on-with-vorto-iot-information-models/">recent blog post about Vorto</a>). On a very abstract level, a programmer could refer to “the radio” and “send x bytes” in their code, an interface presented by the <a href="https://projects.eclipse.org/proposals/edje">EDJE</a> hardware abstraction layer that takes care of the technical differences between various devices. Once developed, one can deploy the new code via <a href="https://projects.eclipse.org/proposals/hawkbit">hawkBIT</a> to a large number of devices at once. As such, hawkBIT reminds me of resin.io, which I <a href="http://iot.ghost.io/deploying-raspberry-pi-images-at-scale/">wrote about earlier</a>. On the device itself then, the <a href="https://projects.eclipse.org/projects/rt.concierge">Concierge</a> system is a small footprint Java core that would run that code.</p>
+<p>The <a href="http://www.eclipse.org/vorto/index.html">Vorto</a> GUI allows one to provide language-independent descriptions of devices, which via the Vorto code generators can be conveniently translated into objects/classes in any programming language for which such generator exists. (See my <a href="/2016/03/11/hands-on-with-vorto-iot-information-models.html">recent blog post about Vorto</a>). On a very abstract level, a programmer could refer to “the radio” and “send x bytes” in their code, an interface presented by the <a href="https://projects.eclipse.org/proposals/edje">EDJE</a> hardware abstraction layer that takes care of the technical differences between various devices. Once developed, one can deploy the new code via <a href="https://projects.eclipse.org/proposals/hawkbit">hawkBIT</a> to a large number of devices at once. As such, hawkBIT reminds me of resin.io, which I <a href="/2015/09/14/deploying-raspberry-pi-images-at-scale.markdown">wrote about earlier</a>. On the device itself then, the <a href="https://projects.eclipse.org/projects/rt.concierge">Concierge</a> system is a small footprint Java core that would run that code.</p>
 
 <p><br />
 On the <strong>component level</strong>, <a href="http://www.eclipse.org/kura/">Eclipse Kura</a> deserves a very honourable mention in the very long list of projects that can simply be deployed in one own’s IoT solutions. Kura is an easy-to-use gateway system that acts between sensor devices and a backend. Traditionally used for demonstrations on a Raspberry Pi, Kura and Pi now almost always go together, with e.g. the <a href="http://www.openhab.org">openHAB</a> being widely used by hobbyists for home automation on the Pi.</p>

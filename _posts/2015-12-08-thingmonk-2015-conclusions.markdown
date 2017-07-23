@@ -18,7 +18,8 @@ I must have emitted some 100 tweets from thingmonk and it's nearly impossible to
 Also, thingmonk is small enough so you actually get to speak to the presenters. We all know evil corporates that are now beginning to consume the IoT, but once you meet folks like [Kyle Roche](https://twitter.com/kylemroche) you see that even the dark tower that is Amazon AWS is just run by normal people.
 
 While I'm writing this I realise: This is not going to turn into a summary of talks. Wait until the videos are going to come out, then you can hear [Yodit Stanton](https://twitter.com/yoditstanton), [Matt Biddulph](https://twitter.com/mattb), [Tom Raftery](https://twitter.com/TomRaftery) or even myself talk.
-<center>
+
+
 **Thingmonk is all about the people.**
-</center>
+
 Maybe the entire Internet of Things is, as probably best pitched by [Joanna Montgomery](https://twitter.com/joannasaurusrex) who presented her heartbeat transmitting bed-ware [Pillow Talk](https://www.kickstarter.com/projects/littleriot/pillow-talk-feel-the-presence-of-your-loved-one).

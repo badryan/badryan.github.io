@@ -28,21 +28,21 @@ First, we need to establish that our application is allowed to interact with Kin
 
 Here’s the Node-RED login flow (click to zoom). Basic building blocks on top, the flow, and configuration details. The login process returns a JSON entry:
 
-{“_id”:”5408a38ff374dfb81300811e”, “wakeUpTimeMin”:420, “sleepTimeMin”:1320, “sunSpriteUUID”:”B9ACE665-D4E2-E0DC-C6B8-8AF2A38EDCBA”, “_push”:{}, “syncRefDate”:”ISODate(\\”2014-12-06T17:23:47.177Z\\”)”, “possibleAchievementsCount”:12, “lastBatteryPercent”:1, “username”:”xxxxx@gxxxx.com”, “timezoneOffsetSec”:0, “luxGoal”:300000, “email”:”xxxxx@gxxxx.com”, “_kmd”:{“lmt”:”2014-12-06T17:45:20.259Z”,”ect”:”2014-09-04T17:38:23.221Z”,”emailVerification”: {“status”:”confirmed”, “lastStateChangeAt”:”2014-09-04T18:19:19.756Z”, “lastConfirmedAt”:”2014-09-04T18:19:19.756Z”, “emailAddress”:”xxxx@gxxx.com”}, “authtoken”:”xxxx”}, “_acl”:{“creator”:”5408a38ff374dfb81300811e”}}
+`{“_id”:”5408a38ff374dfb81300811e”, “wakeUpTimeMin”:420, “sleepTimeMin”:1320, “sunSpriteUUID”:”B9ACE665-D4E2-E0DC-C6B8-8AF2A38EDCBA”, “_push”:{}, “syncRefDate”:”ISODate(\\”2014-12-06T17:23:47.177Z\\”)”, “possibleAchievementsCount”:12, “lastBatteryPercent”:1, “username”:”xxxxx@gxxxx.com”, “timezoneOffsetSec”:0, “luxGoal”:300000, “email”:”xxxxx@gxxxx.com”, “_kmd”:{“lmt”:”2014-12-06T17:45:20.259Z”,”ect”:”2014-09-04T17:38:23.221Z”,”emailVerification”: {“status”:”confirmed”, “lastStateChangeAt”:”2014-09-04T18:19:19.756Z”, “lastConfirmedAt”:”2014-09-04T18:19:19.756Z”, “emailAddress”:”xxxx@gxxx.com”}, “authtoken”:”xxxx”}, “_acl”:{“creator”:”5408a38ff374dfb81300811e”}}`
 
 So with a little gazing, it become obvious what device ID your SunSprite has, where you live (timezone offset), when you last synced with the platform, battery status, and, most importantly, an authtoken (here abbreviated with xxxx) to be used with all future queries. Our Node-RED flow defines a few of those as global variables *context.global.xxx*.
 
-Unconstrained queries can easily yield more data than Kinvey is happy to provide in one go: 10k records is the most they will pass back to you per query. However, using the API endpoint at /appdata/*kid_Ve5xRCs7Mm*/*luxRecords*/?query=[filters]&[modifiers] as [detailed in their documentation](http://devcenter.kinvey.com/rest/guides/datastore#Querying) allows one to slice and dice their, what I assume, is a [MongoDB](http://www.mongodb.com) instance. A typical one minute data point looks like this:
+Unconstrained queries can easily yield more data than Kinvey is happy to provide in one go: 10k records is the most they will pass back to you per query. However, using the API endpoint at `/appdata/*kid_Ve5xRCs7Mm*/*luxRecords*/?query=[filters]&[modifiers]` as [detailed in their documentation](http://devcenter.kinvey.com/rest/guides/datastore#Querying) allows one to slice and dice their, what I assume, is a [MongoDB](http://www.mongodb.com) instance. A typical one minute data point looks like this:
 
-{“_id”:”5481da9af84b57755b3fc938″, “lux”:0, “isGoodLux”:false, “goodLux”:0, “normalizedLux”:0, “uv”:-0.155, “date”:”2014-12-05T16:15:23.797Z”, “_acl”:{“creator”:”5408a38ff374dfb81300811e”}, “_kmd”:{“ect”:”2014-12-05T16:17:30.600Z”,”lmt”:”2014-12-05T16:17:30.600Z”}}
+`{“_id”:”5481da9af84b57755b3fc938″, “lux”:0, “isGoodLux”:false, “goodLux”:0, “normalizedLux”:0, “uv”:-0.155, “date”:”2014-12-05T16:15:23.797Z”, “_acl”:{“creator”:”5408a38ff374dfb81300811e”}, “_kmd”:{“ect”:”2014-12-05T16:17:30.600Z”,”lmt”:”2014-12-05T16:17:30.600Z”}}`
 
 I couldn’t spot a difference between “lux” and “normalizedLux”, but that’s effectively the raw reads of brightness. “uv” is the UV index, which for some reason is negative in darkness. The “date” is when the measurement was taken (relative to your timezone offset, I live in Zulu time). I empirically determined that “isGoodLux” is true for lux values > 2500, which is the famous “bright enough” threshold in the iOS app. If data points are bright enough, “goodLux” is a positive integer. I assume that all lux values are added to a sum and expressed relative to luxGoal, as the summation of just the isGoodLux data points was below my daily percentage indicated in the iOS app.
 
 ![](/content/images/2015/09/SunSprite_addlux_flow.png)
 My Node-RED flow (click to zoom) does the following: Between 7am and 10pm it polls data from Kinvey every 15min. It’s directing a get request to
 
-*http://baas.kinvey.com/appdata/+appname+*  
-*/luxRecords/?query={“date”:{“$lt”:”+tomorrow+”,”$gte”:”+today+”},”isGoodLux”:true}&fields=goodLux,date*
+`*http://baas.kinvey.com/appdata/+appname+*  
+*/luxRecords/?query={“date”:{“$lt”:”+tomorrow+”,”$gte”:”+today+”},”isGoodLux”:true}&fields=goodLux,date*`
 
 which yields relatively little data at a time. tomorrow and today are calculated on the basis of the date stamp coming from the inject node. I’m then looping over all goodLux values and, once I have more goodLux than LUXGOAL, I record the time of day and set a flag. Node-RED messages typically have a payload (which we have seen a few times before) and a topic, which in this case we set to “enough light”. The switch node simply asserts whether we’ve had “enough light” as a topic, and if so, sends a tweet with the payload set in accumulateGoodLux. A typical tweet may then look like: “294% of minimal, 100% at: 11:12:41″.
 

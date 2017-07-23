@@ -24,7 +24,8 @@ Also, that stuff needs to be documented, so I might as well do it in public.
 
 ![](/content/images/2015/10/armada.JPG)
 The picture shows the device from two sides. One side carries an off-the-shelf **HC-SR501 passive-infrared motion sensor** (PIR; the white dome) that reacts to movement of warm-blooded animals. The other side features a **[Wirelessthings RFμ328](https://www.wirelessthings.net/rf-328-arduino-atmega-328-compatible-radio-transceiver-rfu-328) Arduino-compatible microcontroller with on-board radio** capability to relay the state of the PIR.
-<br>
+
+
 Here's a close-up together with an AA battery for size comparison:
 ![](/content/images/2015/10/side_view.jpg)
 
@@ -46,10 +47,13 @@ From the prototyping stage I was sure to have a functioning board and working RF
 I went over the boards in several iterations.
 
 1. In the first iteration, I soldered on the micro-USB receptacles. Once I had finished a batch of ten or so boards, I connected them to a power adapter and tested with a volt meter on points GND and Vin whether I could see 5+V. In some cases I had to go back and refine the solder on the GND/VDD pins.
-2. In a previous step, I had put all PowerPODs on break-away-header legs. <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Large <a href="https://twitter.com/wirelessthings">@wirelessthings</a> PowerPOD array. Didn&#39;t produce a single Watt after an entire afternoon facing south. <a href="http://t.co/GxqVguIEmi">pic.twitter.com/GxqVguIEmi</a></p>&mdash; Boris Adryan (@BorisAdryan) <a href="https://twitter.com/BorisAdryan/status/642746278129045504">September 12, 2015</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+2. In a previous step, I had put all PowerPODs on break-away-header legs.
+<blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Large <a href="https://twitter.com/wirelessthings">@wirelessthings</a> PowerPOD array. Didn&#39;t produce a single Watt after an entire afternoon facing south. <a href="http://t.co/GxqVguIEmi">pic.twitter.com/GxqVguIEmi</a></p>&mdash; Boris Adryan (@BorisAdryan) <a href="https://twitter.com/BorisAdryan/status/642746278129045504">September 12, 2015</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 3. The "PowerPODs on stilts" were mounted next. In order to spot any broken voltage regulators (of which there were none), I connected all boards to power and checked for 3V3 with a volt meter on the GND and Vout. Note that I left the overhead of the "stilts" sticking out of the back of the board, allowing me to conveniently touch them with my probes. They're visible in between the PCB and the PIR in the picture with the battery.
 4. Next, I put on the 4k7 resistors. (No test).
-5. In a previous step, I had already attached the header pins to the RFμ328s. <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">The top shows what Miles does. The bottom shows what Stacey does. Lately, both haven&#39;t been happy with each other. <a href="http://t.co/zhvgktbuPA">pic.twitter.com/zhvgktbuPA</a></p>&mdash; Boris Adryan (@BorisAdryan) <a href="https://twitter.com/BorisAdryan/status/647379137628401664">September 25, 2015</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script> I inserted the legs into female headers (2mm pitch) and soldered the carefully aligned headers onto the board.
+5. In a previous step, I had already attached the header pins to the RFμ328s. 
+<blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">The top shows what Miles does. The bottom shows what Stacey does. Lately, both haven&#39;t been happy with each other. <a href="http://t.co/zhvgktbuPA">pic.twitter.com/zhvgktbuPA</a></p>&mdash; Boris Adryan (@BorisAdryan) <a href="https://twitter.com/BorisAdryan/status/647379137628401664">September 25, 2015</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+I inserted the legs into female headers (2mm pitch) and soldered the carefully aligned headers onto the board.
 5. I then removed all RFμ328 again from the PCB, attached the board to power, and checked whether I could see 3V3 by inserting probes into the 3V and GND positions of the RFμ328 headers. This way I could at least be sure that the radios had power if they would remain silent.
 6. In the next step I added all passive components (LED, capacitor) and jumper headers. (No test).
 7. The three pins of the PIR connect to the board through break-away female headers. Here was the most critical test of the board, ensuring that most of the "wiring" of the board was actually functional: I connected the D2 and D12 pins of the radio header with a jumper wire. That is, a voltage coming from the middle PIR pin should be relayed to the positive pole of the LED. After powering the board through micro-USB, this allowed me to test if the PIR was detecting activity, and if so, if the LED could be activated.
